@@ -4,9 +4,16 @@ import { ApolloServer, gql } from 'apollo-server-express';
 
 const app = express();
 
+const playground = {
+  settings: {
+    'editor.cursorShape': 'line'
+  }
+};
+
 const server = new ApolloServer({
   typeDefs: schema.typeDefs,
-  resolvers: schema.resolvers
+  resolvers: schema.resolvers,
+  playground
 });
 
 server.applyMiddleware({ app });
