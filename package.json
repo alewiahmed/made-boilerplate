@@ -1,0 +1,13 @@
+{
+  "name": "made-boilerplate",
+  "version": "1.0.0",
+  "description":
+    "Mongodb, Apollo server, Docker and Express - graphql server boilerplate.",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["graphql", "server", "apollo", "server"],
+  "author": "alewimail@gmail.com",
+  "license": "ISC"
+}
