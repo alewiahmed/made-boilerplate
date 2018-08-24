@@ -1,5 +1,10 @@
+import baseResolver from '../baseResolver';
+import { Context } from 'apollo-resolvers/dist/context';
+
 const resolvers = {
-  hello: () => 'world'
+  hello: baseResolver.createResolver(() => {
+    return 'Hello';
+  })
 };
 
 export default resolvers;
