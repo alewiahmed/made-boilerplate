@@ -1,8 +1,11 @@
 // The graphQl Query entry point
 const queryEntryPoints = `
 type RootQuery {
-  "A simple type for getting started!"
-  hello: String
+  "List of users"
+  users: [User]
+  
+  "List of posts"
+  posts: [Post]
 }`;
 
 export default queryEntryPoints;

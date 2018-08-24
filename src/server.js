@@ -11,9 +11,11 @@ const playground = {
 };
 
 const server = new ApolloServer({
+  playground,
+  mocks: true,
+  mockEntireSchema: false,
   typeDefs: schema.typeDefs,
-  resolvers: schema.resolvers,
-  playground
+  resolvers: schema.resolvers
 });
 
 server.applyMiddleware({ app });
