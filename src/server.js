@@ -1,28 +1,12 @@
 import express from 'express';
+import schema from './graphql/schema';
 import { ApolloServer, gql } from 'apollo-server-express';
 
 const app = express();
 
-let queryType = `
-  type Query {
-    "A simple type for getting started!"
-    hello: String
-  }
-`;
-
-// The GraphQL schema
-const typeDefs = [queryType];
-
-// A map of functions which return data for the schema.
-const resolvers = {
-  Query: {
-    hello: () => 'world'
-  }
-};
-
 const server = new ApolloServer({
-  typeDefs,
-  resolvers
+  typeDefs: schema.typeDefs,
+  resolvers: schema.resolvers
 });
 
 server.applyMiddleware({ app });
