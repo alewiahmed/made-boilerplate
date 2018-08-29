@@ -8,7 +8,7 @@ services:
         - ./:/app
         - /app/node_modules
     ports:
-      - "80:5000"
+      - "4000:4000"
     links:
       - mongo
   mongo:
