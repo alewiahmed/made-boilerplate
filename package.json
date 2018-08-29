@@ -1,14 +1,18 @@
 {
   "name": "made-boilerplate",
   "version": "1.0.0",
-  "description":
-    "Mongodb, Apollo server, Docker and Express - graphql server boilerplate.",
+  "description": "Mongodb, Apollo server, Docker and Express - graphql server boilerplate.",
   "main": "src/server.js",
   "scripts": {
     "start": "nodemon src/server.js --legacy-watch --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["graphql", "server", "apollo", "server"],
+  "keywords": [
+    "graphql",
+    "server",
+    "apollo",
+    "server"
+  ],
   "author": "alewimail@gmail.com",
   "license": "ISC",
   "devDependencies": {
@@ -24,6 +28,7 @@
     "express": "^4.16.3",
     "graphql": "^0.13.2",
     "graphql-date": "^1.0.3",
-    "mongoose": "^5.2.10"
+    "mongoose": "^5.2.10",
+    "mongoose-timestamp": "^0.6.0"
   }
 }
