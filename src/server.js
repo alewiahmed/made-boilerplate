@@ -15,14 +15,17 @@ const playground = {
 
 const start = async () => {
   const app = express();
-  await connectMongo();
+  let models = await connectMongo();
 
   const server = new ApolloServer({
     playground,
     mocks: true,
     mockEntireSchema: false,
     typeDefs: schema.typeDefs,
-    resolvers: schema.resolvers
+    resolvers: schema.resolvers,
+    context: {
+      ...models
+    }
   });
 
   server.applyMiddleware({ app });
