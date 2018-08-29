@@ -1,9 +1,11 @@
 import express from 'express';
-import schema from './graphql/schema';
-import { SERVER_PORT } from '../config';
 import { ApolloServer, gql } from 'apollo-server-express';
 
-const app = express();
+import config from '../config';
+import connectMongo from './db';
+import schema from './graphql/schema';
+
+let { SERVER_PORT } = process.env;
 
 const playground = {
   settings: {
@@ -11,18 +13,25 @@ const playground = {
   }
 };
 
-const server = new ApolloServer({
-  playground,
-  mocks: true,
-  mockEntireSchema: false,
-  typeDefs: schema.typeDefs,
-  resolvers: schema.resolvers
-});
+const start = async () => {
+  const app = express();
+  await connectMongo();
 
-server.applyMiddleware({ app });
+  const server = new ApolloServer({
+    playground,
+    mocks: true,
+    mockEntireSchema: false,
+    typeDefs: schema.typeDefs,
+    resolvers: schema.resolvers
+  });
 
-app.listen({ port: SERVER_PORT }, () =>
-  console.log(
-    `🚀 Server ready at http://localhost:${SERVER_PORT}${server.graphqlPath}`
-  )
-);
+  server.applyMiddleware({ app });
+
+  app.listen({ port: SERVER_PORT }, () =>
+    console.log(
+      `🚀 Server ready at http://localhost:${SERVER_PORT}${server.graphqlPath}`
+    )
+  );
+};
+
+start();
