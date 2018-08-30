@@ -46,6 +46,28 @@ const resolvers = {
         };
       });
     }
+  ),
+
+  /**
+   * returns an array of Users
+   */
+  users: baseResolver.createResolver(
+    async (root, { first, last, before, after }, { User }) => {
+      let query = User.find({});
+      query = limitQueryWithId(query, { before, after });
+      let pageInfo = await applyPagination(query, { first, last });
+      return await query.find({}).then(users => {
+        const startEndCursor = getStartEndCursor(users);
+        pageInfo = {
+          ...pageInfo,
+          ...startEndCursor
+        };
+        return {
+          users,
+          pageInfo
+        };
+      });
+    }
   )
 };
 

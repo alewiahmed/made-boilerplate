@@ -6,9 +6,6 @@ type RootQuery {
 
   "get a post"
   post(id: String!): Post
-
-  "List of users"
-  users: [User]
   
   "returns list of posts"
   posts(
@@ -16,6 +13,13 @@ type RootQuery {
   after: String,
   last: Int,
   before: String): PostConnection
+
+  "return all users"
+  users(
+  last: Int,
+  first: Int,
+  after: String,
+  before: String): UserConnection
 }`;
 
 export default queryEntryPoints;
