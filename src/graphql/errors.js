@@ -22,7 +22,20 @@ export const AlreadyAuthenticatedError = createError(
   }
 );
 
-// error while registering
+// Error while registering
 export const RegistrationError = createError('RegistrationError', {
   message: 'Error Registering'
 });
+
+// Given Email already exists Error
+export const EmailAlreadyTakenError = createError('EmailAlreadyTakenError', {
+  message: 'User with such email exists'
+});
+
+// incorrect Emamil format Error
+export const IncorrectEmailFormatError = createError(
+  'IncorrectEmailFormatError',
+  {
+    message: 'Incorrect email format'
+  }
+);
