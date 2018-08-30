@@ -2,9 +2,17 @@ import bcrypt from 'bcrypt';
 
 import { tokenize } from '../../lib';
 import baseResolver from '../baseResolver';
-import { RegistrationError } from '../errors';
+
+import {
+  LoginError,
+  RegistrationError,
+  EmailDoesNotExistError,
+  IncorrectPasswordError
+} from '../errors';
+
 import {
   emailNotTakenResolver,
+  isAuthenticatedResolver,
   isNotAuthenticatedResolver
 } from '../accessControl/auth';
 
@@ -25,6 +33,7 @@ const userMutationResolvers = {
           userInfo = { _id: user.id, email: user.email };
           return user;
         }
+        throw new LoginError();
       });
     }
   ),
@@ -41,6 +50,26 @@ const userMutationResolvers = {
         .catch(err => {
           throw new RegistrationError();
         });
+    }
+  ),
+  changePassword: isAuthenticatedResolver.createResolver(
+    async (root, { oldPassword, newPassword }, { User, userInfo }) => {
+      let user = await User.findOne({ ...userInfo });
+      if (!user) {
+        throw new EmailDoesNotExistError();
+      }
+      let passwordCheck = await bcrypt.compare(oldPassword, user.password);
+      if (!passwordCheck) {
+        throw new IncorrectPasswordError();
+      }
+      user.password = await bcrypt.hash(newPassword, 8);
+      try {
+        user = await user.save();
+        user = tokenize(user);
+        return user;
+      } catch (error) {
+        return error;
+      }
     }
   )
 };

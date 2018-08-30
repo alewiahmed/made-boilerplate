@@ -39,3 +39,13 @@ export const IncorrectEmailFormatError = createError(
     message: 'Incorrect email format'
   }
 );
+
+// The Email does not exist Error
+export const EmailDoesNotExistError = createError('EmailDoesNotExistError', {
+  message: 'The email does not exist'
+});
+
+// The given currentPassword is not correct error.
+export const IncorrectPasswordError = createError('IncorrectPasswordError', {
+  message: 'Incorrect old password'
+});
