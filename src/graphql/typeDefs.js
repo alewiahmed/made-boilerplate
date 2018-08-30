@@ -5,6 +5,7 @@ import PostType from './post/post.type';
 import RootQuery from './root-query/root-query.type';
 import RootMutation from './root-mutation/root-mutation.type';
 import PostConnectionType from './postConnection/postConnection.type';
+import UserConnectionType from './userConnection/userConnection.type';
 
 const SchemaDefinition = `
   schema {
@@ -20,5 +21,6 @@ export default [
   RootQuery,
   RootMutation,
   SchemaDefinition,
-  PostConnectionType
+  PostConnectionType,
+  UserConnectionType
 ];
