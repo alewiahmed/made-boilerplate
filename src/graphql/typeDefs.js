@@ -4,6 +4,7 @@ import DateType from './date/date.type';
 import PostType from './post/post.type';
 import RootQuery from './root-query/root-query.type';
 import RootMutation from './root-mutation/root-mutation.type';
+import PostConnectionType from './postConnection/postConnection.type';
 
 const SchemaDefinition = `
   schema {
@@ -18,5 +19,6 @@ export default [
   DateType,
   RootQuery,
   RootMutation,
-  SchemaDefinition
+  SchemaDefinition,
+  PostConnectionType
 ];
