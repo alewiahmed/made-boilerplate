@@ -17,12 +17,7 @@ const UserMutation = `
     firstName: String,
     lastName: String,
     email: String,
-    avatar: Upload
   ): User
-
-  # reset password
-  resetPassword (
-  email: String!) : Boolean!
 
   # change password
   changePassword (

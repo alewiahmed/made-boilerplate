@@ -71,6 +71,31 @@ const userMutationResolvers = {
         return error;
       }
     }
+  ),
+  updateProfile: isAuthenticatedResolver.createResolver(
+    async (root, { firstName, lastName, email }, { User, userInfo }) => {
+      let updateFields = {};
+      if (firstName) {
+        updateFields.firstName = firstName;
+      }
+      if (lastName) {
+        updateFields.lastName = lastName;
+      }
+      if (email) {
+        await checkEmail(User, email);
+        updateFields.email = email;
+      }
+
+      let user = await User.findById(userInfo._id);
+
+      await User.updateOne(userInfo, updateFields);
+
+      user = await User.findById(userInfo._id);
+
+      user = tokenize(user);
+      userInfo = { _id: user.id, email: user.email };
+      return user;
+    }
   )
 };
 
