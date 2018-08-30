@@ -8,13 +8,25 @@ import {
   AuthenticationRequiredError
 } from '../errors';
 
+// Check whether the user is an Admin user
+export const isAdminResolver = isAuthenticatedResolver.createResolver(
+  // Extract the user and make sure they are an admin
+  (root, args, { isAdmin }) => {
+    if (!isAdmin) throw new ForbiddenError();
+  }
+);
+
 // Check whether the request is authenticated or not
 export const isAuthenticatedResolver = baseResolver.createResolver(
   // Extract the user from context (undefined if non-existent)
-  async (root, args, { userInfo, User }) => {
+  async (root, args, context) => {
+    let { User, userInfo } = context;
     if (!userInfo) throw new AuthenticationRequiredError();
     let user = await User.findOne({ email: userInfo.email });
     if (!user) throw new AuthenticationRequiredError();
+
+    // Add if user is Admin to the context
+    context.isAdmin = user.role == 'admin' ? true : false;
   }
 );
 
