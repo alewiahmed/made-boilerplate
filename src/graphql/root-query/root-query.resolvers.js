@@ -1,7 +1,12 @@
-import { tokenize } from '../../lib';
 import baseResolver from '../baseResolver';
 import { NoPostFoundError } from '../errors';
 import { isAuthenticatedResolver } from '../accessControl/auth';
+import {
+  tokenize,
+  applyPagination,
+  limitQueryWithId,
+  getStartEndCursor
+} from '../../lib';
 
 const resolvers = {
   /**
@@ -19,7 +24,29 @@ const resolvers = {
    */
   post: baseResolver.createResolver(async (root, { id }, { Post }) => {
     return await Post.findOne({ _id: id }).catch(err => new NoPostFoundError());
-  })
+  }),
+
+  /**
+   * returns an array of Posts
+   */
+  posts: baseResolver.createResolver(
+    async (root, { first, last, before, after }, { Post }) => {
+      let query = Post.find({});
+      query = limitQueryWithId(query, { before, after });
+      let pageInfo = await applyPagination(query, { first, last });
+      return await query.find({}).then(posts => {
+        const startEndCursor = getStartEndCursor(posts);
+        pageInfo = {
+          ...pageInfo,
+          ...startEndCursor
+        };
+        return {
+          posts,
+          pageInfo
+        };
+      });
+    }
+  )
 };
 
 export default resolvers;

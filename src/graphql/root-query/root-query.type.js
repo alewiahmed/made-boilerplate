@@ -10,8 +10,12 @@ type RootQuery {
   "List of users"
   users: [User]
   
-  "List of posts"
-  posts: [Post]
+  "returns list of posts"
+  posts(
+  first: Int,
+  after: String,
+  last: Int,
+  before: String): PostConnection
 }`;
 
 export default queryEntryPoints;
