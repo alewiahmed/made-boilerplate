@@ -21,3 +21,8 @@ export const AlreadyAuthenticatedError = createError(
     message: 'You are already authenticated'
   }
 );
+
+// error while registering
+export const RegistrationError = createError('RegistrationError', {
+  message: 'Error Registering'
+});
