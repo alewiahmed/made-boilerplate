@@ -49,3 +49,8 @@ export const EmailDoesNotExistError = createError('EmailDoesNotExistError', {
 export const IncorrectPasswordError = createError('IncorrectPasswordError', {
   message: 'Incorrect old password'
 });
+
+// Thrown when there is no post with the give id
+export const NoPostFoundError = createError('NoPostFoundError', {
+  message: 'No post found with the given id'
+});

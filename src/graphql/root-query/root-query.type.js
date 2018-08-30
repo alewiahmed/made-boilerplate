@@ -4,6 +4,9 @@ type RootQuery {
   "Get current logged in user info"
   me: User
 
+  "get a post"
+  post(id: String!): Post
+
   "List of users"
   users: [User]
   
