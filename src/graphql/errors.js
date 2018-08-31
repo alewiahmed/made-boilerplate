@@ -59,3 +59,11 @@ export const IncorrectPasswordError = createError('IncorrectPasswordError', {
 export const NoPostFoundError = createError('NoPostFoundError', {
   message: 'No post found with the given id'
 });
+
+// Thrown when a user doesn't exist
+export const TheUserDoesNotExistError = createError(
+  'TheUserDoesNotExistError',
+  {
+    message: 'The given user does not exist'
+  }
+);

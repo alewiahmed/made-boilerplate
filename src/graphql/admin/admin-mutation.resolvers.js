@@ -18,6 +18,22 @@ const adminMutationResolvers = {
       );
       return deleteResult;
     }
+  ),
+  changeUserRole: isAdminResolver.createResolver(
+    async (root, { userId, role }, { User }) => {
+      let user;
+      try {
+        user = await User.findOne({ _id: userId });
+      } catch (err) {
+        throw new TheUserDoesNotExistError();
+      }
+
+      return await User.findOneAndUpdate(
+        { _id: userId },
+        { role },
+        { new: true }
+      );
+    }
   )
 };
 
