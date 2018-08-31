@@ -2,19 +2,12 @@ import emailRegex from 'email-regex';
 
 import baseResolver from '../baseResolver';
 import {
+  ForbiddenError,
   EmailAlreadyTakenError,
   AlreadyAuthenticatedError,
   IncorrectEmailFormatError,
   AuthenticationRequiredError
 } from '../errors';
-
-// Check whether the user is an Admin user
-export const isAdminResolver = isAuthenticatedResolver.createResolver(
-  // Extract the user and make sure they are an admin
-  (root, args, { isAdmin }) => {
-    if (!isAdmin) throw new ForbiddenError();
-  }
-);
 
 // Check whether the request is authenticated or not
 export const isAuthenticatedResolver = baseResolver.createResolver(
@@ -27,6 +20,14 @@ export const isAuthenticatedResolver = baseResolver.createResolver(
 
     // Add if user is Admin to the context
     context.isAdmin = user.role == 'admin' ? true : false;
+  }
+);
+
+// Check whether the user is an Admin user
+export const isAdminResolver = isAuthenticatedResolver.createResolver(
+  // Extract the user and make sure they are an admin
+  (root, args, { isAdmin }) => {
+    if (!isAdmin) throw new ForbiddenError();
   }
 );
 
