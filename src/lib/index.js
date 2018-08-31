@@ -1,5 +1,11 @@
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
+import emailRegex from 'email-regex';
+
+import {
+  EmailAlreadyTakenError,
+  IncorrectEmailFormatError
+} from '../graphql/errors';
 
 let { JWT_SECRET } = process.env;
 
@@ -14,6 +20,14 @@ export function tokenize(user) {
 
   user.token = token;
   return user;
+}
+
+export async function checkEmail(User, email) {
+  let check = emailRegex({ exact: true }).test(email);
+  if (!check) throw new IncorrectEmailFormatError();
+
+  let user = await User.findOne({ email });
+  if (user) throw new EmailAlreadyTakenError();
 }
 
 export function limitQueryWithId(query, { before, after }) {
