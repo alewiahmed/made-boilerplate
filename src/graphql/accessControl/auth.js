@@ -15,7 +15,7 @@ export const isAuthenticatedResolver = baseResolver.createResolver(
   async (root, args, context) => {
     let { User, userInfo } = context;
     if (!userInfo) throw new AuthenticationRequiredError();
-    let user = await User.findOne({ email: userInfo.email });
+    let user = await User.findOne({ ...userInfo });
     if (!user) throw new AuthenticationRequiredError();
 
     // Add if user is Admin to the context
