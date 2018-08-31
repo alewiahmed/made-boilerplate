@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 
-import { tokenize } from '../../lib';
 import baseResolver from '../baseResolver';
+import { tokenize, checkEmail } from '../../lib';
 
 import {
   LoginError,
@@ -86,11 +86,9 @@ const userMutationResolvers = {
         updateFields.email = email;
       }
 
-      let user = await User.findById(userInfo._id);
-
       await User.updateOne(userInfo, updateFields);
 
-      user = await User.findById(userInfo._id);
+      let user = await User.findById(userInfo._id);
 
       user = tokenize(user);
       userInfo = { _id: user.id, email: user.email };
