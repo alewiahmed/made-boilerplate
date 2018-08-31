@@ -4,6 +4,11 @@ export const UnknownError = createError('UnknownError', {
   message: 'An unknown error has occured'
 });
 
+// When a normal user accesses something that requires an admin privilage
+export const ForbiddenError = createError('ForbiddenError', {
+  message: 'You are not allowed to do that'
+});
+
 // user should be logged in but isn't
 export const AuthenticationRequiredError = createError('UnauthorizedError', {
   message: 'You must login to do that'
