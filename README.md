@@ -126,5 +126,5 @@ These are mutations only available for an admin user ( a user with a role set to
 
   You could just `npm install` any new packages inside the node container itself.
 
-  1.  `docker-compose excec node bash`
+  1.  `docker-compose exec node bash`
   2.  `npm intall <packageName>`inside bash.
